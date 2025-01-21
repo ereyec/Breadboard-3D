@@ -1,1 +1,0 @@
-Modules to convert element table array into a mesh that OpenGL can render. 
