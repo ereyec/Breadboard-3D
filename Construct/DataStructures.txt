@@ -1,0 +1,42 @@
+bool breadboardOccupancyMatrixF[59][7];  //0 empty, 1 full
+bool breadboardOccupancyMatrixA[59][7];
+
+int breadboardRailDescriptorArrayF[59];
+int breadboardRailDescriptorArrayA[59];
+
+bool breadboardRailFullArrayF[59];
+bool breadboardRailFullArrayA[59];
+
+//^ Initialize BOM F and BOM A properly. 
+
+void initializeBOMs(){}
+void initializeBRDAs(){}
+void placeIC(){}
+
+
+enum elementTypes{
+	R,
+	C,
+	L,
+	T,
+	W
+};
+
+enum nodeType{
+	VCC,
+	GND,
+	ORDINARY,
+	EXTRAORDINARY
+};
+
+struct elementTableRow{
+	int type;
+	std::vector<int> nodes;
+	int code[6];
+};
+
+struct nodeTableRow{
+	int type;
+	std::vector<int> elements;
+};
+
