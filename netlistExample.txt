@@ -1,0 +1,15 @@
+-i XU1 0 threshold out N001 N003 threshold N002 N001 NE555
+RA N001 N002 2.2k
+C2 N003 0 0.1µF
+RB N002 threshold 22k
+R1 out N004 330
+D1 N004 0 RED_LED
+Vpower N001 0 5V
+C threshold 0 100µF
+.model D D
+.lib C:\...
+.tran 10
+.model RED_LED D (vfwd=1.8)
+.lib NE555.sub
+.backanno
+.end

@@ -1,1 +1,0 @@
-Module to convert a SPICE netlist text file into element and node table arrays that the Construct module can use.

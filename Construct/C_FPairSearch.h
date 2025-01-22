@@ -1,6 +1,5 @@
-//(std::vector<int>& nodes, int* half1, int* hole1, int* rail1, int* half2,  int* hole2, int* rail2)
-
-//(return type void), Returns if the pair {E1, E2} is found in F and the code is updated. 
+bool CF(std::vector<int>& nodes, int* half1, int* hole1, int* rail1, int* half2,  int* hole2, int* rail2)
+{
 
 int E1 = nodes[0], E2 = nodes[1];
 
@@ -71,4 +70,8 @@ if(containsE1 && containsE2)
 			}
 		}
 	}
+	return true;
+}
+
+
 }
