@@ -16,3 +16,22 @@ float getAngleFromPoints(float x1, float z1, float x2, float z2){
 
 	return angle;
 }
+
+glm::vec2 getMidpoint2D(float x1, float y1, float x2, float y2){
+	glm::vec2 midpoint = glm::vec2((x1+x2) / 2.f, (y1+y2) / 2.f);
+	return midpoint;
+}
+
+void pushV3T2(std::vector<float>& vertices, glm::vec3 vec, glm::vec2 tex){
+	vertices.push_back(vec.x);
+        vertices.push_back(vec.y);
+        vertices.push_back(vec.z);
+        vertices.push_back(tex.x);
+        vertices.push_back(tex.y);
+}
+
+void pushV3(std::vector<float>& vertices, glm::vec3 vec){
+	vertices.push_back(vec.x);
+        vertices.push_back(vec.y);
+        vertices.push_back(vec.z);
+}
