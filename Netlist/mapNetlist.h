@@ -15,6 +15,7 @@ for(int i = 0; i < netlistVector.size(); i++){
 			std::string nodeName = netlistVector[i][j];
 			if(nodeMap.find(nodeName) == nodeMap.end()){
 				nodeMap.insert(std::make_pair(nodeName, index));
+				index++;
 			}
 		}
 	}
@@ -25,6 +26,7 @@ for(int i = 0; i < netlistVector.size(); i++){
 			std::string nodeName = netlistVector[i][j];
 			if(nodeMap.find(nodeName) == nodeMap.end()){
 				nodeMap.insert(std::make_pair(nodeName, index));
+				index++;
 			}
 		}
 	}
