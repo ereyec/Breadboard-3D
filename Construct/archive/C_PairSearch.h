@@ -27,6 +27,12 @@ for(int i = 0; i < 59; i++){
 
 if(E1RailFound){
 	//Hole search
+	//Check the number of empty holes while keeping track of their indices. >2 place in next available spot,
+	//otherwise we need to find a spot and create a new node. 
+	std::vector<int> holes;
+	for(int x = 2; x < 7; x++){
+		
+	}
 }
 else{
 	//Node Search then Hole search

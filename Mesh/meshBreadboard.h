@@ -1,7 +1,9 @@
 /*Creates the vertex data for the breadboard, then buffers it to the GPU*/
 std::vector<float> tVertexData;
 std::vector<float> lVertexData;
+std::vector<float> oVertexData;
 
+//Elements and their leads
 for(int i = 0; i < elementTable.size(); i++){
 	//Element Vertices (Textured)
 	//Retrieve the code:
@@ -52,6 +54,25 @@ for(int i = 0; i < elementTable.size(); i++){
 
 }
 
+//The breadboard
+{
+	glm::vec3 v1 = breadboardVertices::v1;
+	glm::vec3 v2 = breadboardVertices::v2;
+	glm::vec3 v3 = breadboardVertices::v3;
+	glm::vec3 v4 = breadboardVertices::v4;
+	
+	pushV3T2(oVertexData, v1, breadboardVertices::t1);
+	pushV3T2(oVertexData, v2, breadboardVertices::t2);
+	pushV3T2(oVertexData, v3, breadboardVertices::t3);
+	pushV3T2(oVertexData, v2, breadboardVertices::t2);
+	pushV3T2(oVertexData, v3, breadboardVertices::t3);
+	pushV3T2(oVertexData, v4, breadboardVertices::t4);
+
+	//Todo: Place IC vertices (if applicable here)
+}
+
+//Jumper wires (todo)
+
 unsigned int tVAO, tVBO;
 glGenVertexArrays(1, &tVAO);
 glGenBuffers(1, &tVBO);
@@ -76,3 +97,15 @@ glEnableVertexAttribArray(0);
 glBindBuffer(GL_ARRAY_BUFFER, 0);
 glBindVertexArray(0);
 
+unsigned int oVAO, oVBO;
+glGenVertexArrays(1, &oVAO);
+glGenBuffers(1, &oVBO);
+glBindVertexArray(oVAO);
+glBindBuffer(GL_ARRAY_BUFFER, oVBO);
+glBufferData(GL_ARRAY_BUFFER, oVertexData.size() * sizeof(float), oVertexData.data(), GL_STATIC_DRAW);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);
+glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+glEnableVertexAttribArray(1);
+glBindBuffer(GL_ARRAY_BUFFER, 0);
+glBindVertexArray(0);

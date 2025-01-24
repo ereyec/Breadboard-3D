@@ -22,6 +22,10 @@ glm::vec2 getMidpoint2D(float x1, float y1, float x2, float y2){
 	return midpoint;
 }
 
+float getDistance(glm::vec2 p1, glm::vec2 p2){
+	return std::sqrt( (p2.x - p1.x)*(p2.x - p1.x) + (p2.y - p1.y)*(p2.y - p1.y) );
+}
+
 void pushV3T2(std::vector<float>& vertices, glm::vec3 vec, glm::vec2 tex){
 	vertices.push_back(vec.x);
         vertices.push_back(vec.y);

@@ -4,7 +4,7 @@ C2 N003 0 0.1µF
 RB N002 threshold 22k
 R1 out N004 330
 D1 N004 0 RED_LED
-Vpower N001 0 5V
+-v Vpower N001 0 5V
 C threshold 0 100µF
 .model D D
 .lib C:\...

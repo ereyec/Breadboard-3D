@@ -1,4 +1,5 @@
 std::vector<elementTableRow> elementTable;
+std::vector<nodeTableRow> nodeTable;
 
 //Conventions: -i for IC
 //...std::vector<std::vector<std::string>> netlistVector;
@@ -6,6 +7,7 @@ std::vector<elementTableRow> elementTable;
 //Mapping the netlist nodes to indices
 int index = 0;
 std::unordered_map<std::string, int> nodeMap;
+int groudNode, vccNode;
 
 for(int i = 0; i < netlistVector.size(); i++){
 	//Integrated circuit netlist line parsing - may not work properly. 	
@@ -36,18 +38,72 @@ for(int i = 0; i < netlistVector.size(); i++){
 //Adding elements to the elementTable. 
 for(int i = 0; i < netlistVector.size(); i++){
 	char type = netlistVector[i][0][0];
+		
+	elementTableRow row;
+	int e1, e2;
+	
+	if(type == 'R'){
+		e1 = nodeMap.find(netlistVector[i][1])->second;
+		e2 = nodeMap.find(netlistVector[i][2])->second;
+		row = {R, {e1, e2}};
+	}
+	else if(type == 'C'){
+		e1 = nodeMap.find(netlistVector[i][1])->second;
+		e2 = nodeMap.find(netlistVector[i][2])->second;
+		row = {C, {e1, e2}};
+	}
+	else if(type == 'L'){
+		e1 = nodeMap.find(netlistVector[i][1])->second;
+		e2 = nodeMap.find(netlistVector[i][2])->second;
+		row = {L, {e1, e2}};
+	}
+	else if(type == 'D'){
+		e1 = nodeMap.find(netlistVector[i][1])->second;
+		e2 = nodeMap.find(netlistVector[i][2])->second;
+		row = {D, {e1, e2}};
+	}
 
-	if(type == 'R')
-	else if(type == 'C')
-	else if(type == 'L')
-	else if(type == 'D')	
+	elementTable.push_back(row);
 }
 
-//Print the element table to ascertain correctness
+//Test: Print the element table to ascertain correctness
 for(int i = 0; i < elementTable.size(); i++){
-	std::cout << "Type: " << int << "  Elements: " << elementTable[i].elements[0] << " "
-<< elementTable[i].elements[1] << std::endl;
+	std::cout << "Type: " << int << " Nodes: " << elementTable[i].nodes[0] << " "
+<< elementTable[i].nodes[1] << std::endl;
 
 }
 
+//Next, create the node table. We already have the size of the node table, it is simply the value of index + 1.
+//Outer for loop will iterate index+1 times. Each iteration, search the elementTable. Any element that contains the //current index will have its index pushed on the node table row's element int vector. 
+for(int i = 0; i < index + 1; i++){
+	nodeTableRow row;	
 
+	for(int j = 0; j < elementTable.size(); j++){
+		for(int k = 0; k < elementTable[j].size(); k++){
+			if(elementTable[j].nodes[k] == i){
+				row.elements.push_back(j);
+				break;
+			}
+		}
+	}
+	nodeTable.push_back(row);
+}
+
+//Test: Print the node table to ascertain correctness
+for(int i = 0; i < nodeTable.size(); i++){
+	std::cout << "Type: " << int << "  Nodes: ";
+	
+	for(int j = 0; j < nodeTable[i].elements.size(); j++){
+		std::cout << nodeTable[i].elements[j] << " ";
+	}
+	std::cout << std::endl;
+}
+
+//Mark VCC and GND
+groundNode = nodeMap.find("0")->second; //In every netlist, "0" is ground
+
+for(int i = 0; i < netlistVector.size(); i++){
+	if(std::strcmp(netlistVector[i][0], "-v") == 0){
+		vccNode = nodeMap.find(netlistVector[i][2])->second;
+	}
+}

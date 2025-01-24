@@ -19,6 +19,7 @@ for(int i = 0; i < 59; i++){
 if(containsE1 && containsE2)
 {
 	//Find hole in E1
+	//We first check the number of empty holes, and based off of that do more operations
 	std::vector<int> holes1;
 	for(int x = 2; x < 7; x++){
 		if(breadboardOccupancyMatrixF[tempRail1][x] == 0) holes1.push_back(x);
