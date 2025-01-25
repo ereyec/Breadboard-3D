@@ -1,58 +1,53 @@
-struct pair{
-	int code[6];
-	float distance;
-};
+#ifndef ELEMENTPLACE_H
+#define ELEMENTPLACE_H
 
-struct point{
-	int code[3];
-};
+#include "../common.h"
 
-//../int groundNode, vccNode; These will be a specific value that we check. 
+void placeElement(Common& common, int node1, int node2, int elementTableIndex){
 
 //SCAN BREADBOARD DATA
-int node1, node2, elementIndex;
 std::vector<point> v1;
 std::vector<point> v2;
 
-for(int x = 0; x < 59; x++){ //node 1 
+for(int x = 0; x < 59; x++){ //node 1 , also should rename x and y to row/col
 	point p;
 	for(int y = 0; y < 1; y++){ //VCC
-		bool c1 = breadboardOccupancyMatrixF[x][y];
-		bool c2 = (node1 == vccNode);
+		bool c1 = common.breadboardOccupancyMatrixF[x][y];
+		bool c2 = (node1 == common.vccNode);
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
-		c1 = breadboardOccupancyMatrixA[x][y];
+		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
 	}
 	for(int y = 1; y < 2; y++){ //GND
-		bool c1 = breadboardOccupancyMatrixF[x][y];
-		bool c2 = (node1 == groundNode);
+		bool c1 = common.breadboardOccupancyMatrixF[x][y];
+		bool c2 = (node1 == common.groundNode);
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
-		c1 = breadboardOccupancyMatrixA[x][y];
+		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
 	}
 	for(int y = 2; y < 7; y++){
-		bool c1 = breadboardOccupancyMatrixF[x][y];
-		bool c2 = breadboardRailFullArrayF[x];
-		bool c3 = (breadboardRailDescriptorArrayF[x] == node1); //!!!!
+		bool c1 = common.breadboardOccupancyMatrixF[x][y];
+		bool c2 = common.breadboardRailFullArrayF[x];
+		bool c3 = (common.breadboardRailDescriptorArrayF[x] == node1); //!!!!
 		if(!c1 && !c2 && c3){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
-		c1 = 	breadboardOccupancyMatrixA[x][y];
-		c2 = breadboardRailFullArrayA[x];
-		c3 = (breadboardRailDescriptorArrayA[x] == node1);
+		c1 = 	common.breadboardOccupancyMatrixA[x][y];
+		c2 = common.breadboardRailFullArrayA[x];
+		c3 = (common.breadboardRailDescriptorArrayA[x] == node1);
 		if(!c1 && !c2 && c3){
 			p = { {65, y, x} };
 			v1.push_back(p);
@@ -63,42 +58,42 @@ for(int x = 0; x < 59; x++){ //node 1
 for(int x = 0; x < 59; x++){ //node 2
 	point p;
 	for(int y = 0; y < 1; y++){ //VCC
-		bool c1 = breadboardOccupancyMatrixF[x][y];
-		bool c2 = (node2 == vccNode);
+		bool c1 = common.breadboardOccupancyMatrixF[x][y];
+		bool c2 = (node2 == common.vccNode);
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
-		c1 = breadboardOccupancyMatrixA[x][y];
+		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
 	}
 	for(int y = 1; y < 2; y++){ //GND
-		bool c1 = breadboardOccupancyMatrixF[x][y];
-		bool c2 = (node2 == groundNode);
+		bool c1 = common.breadboardOccupancyMatrixF[x][y];
+		bool c2 = (node2 == common.groundNode);
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
-		c1 = breadboardOccupancyMatrixA[x][y];
+		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
 			p = { {70, y, x} };
 			v1.push_back(p);
 		}
 	}
 	for(int y = 2; y < 7; y++){		
-		bool c1 = breadboardOccupancyMatrixF[x][y];
-		bool c2 = breadboardRailFullArrayF[x];
-		bool c3 = (breadboardRailDescriptorArrayF[x] == node2); 
+		bool c1 = common.breadboardOccupancyMatrixF[x][y];
+		bool c2 = common.breadboardRailFullArrayF[x];
+		bool c3 = (common.breadboardRailDescriptorArrayF[x] == node2); 
 		if(!c1 && !c2 && c3){
 			p = { {70, y, x} };
 			v2.push_back(p);
 		}
-		c1 = 	breadboardOccupancyMatrixA[x][y];
-		c2 = breadboardRailFullArrayA[x];
-		c3 = (breadboardRailDescriptorArrayA[x] == node2);
+		c1 = 	common.breadboardOccupancyMatrixA[x][y];
+		c2 = common.breadboardRailFullArrayA[x];
+		c3 = (common.breadboardRailDescriptorArrayA[x] == node2);
 		if(!c1 && !c2 && c3){
 			p = { {65, y, x} };
 			v2.push_back(p);
@@ -131,19 +126,21 @@ std::sort(pairs.begin(), pairs.end(), [](const pair& a, const pair& b)
 
 //SET MATRIX OCCUPANCY
 if(pairs[0].code[0] == 70){
-	breadboardOccupancyMatrixF[pairs[0].code[2]][pairs[0].code[1]] = 1;
+	common.breadboardOccupancyMatrixF[pairs[0].code[2]][pairs[0].code[1]] = 1;
 }
 else if(pairs[0].code[0] == 65){
-	breadboardOccupancyMatrixA[pairs[0].code[2]][pairs[0].code[1]] = 1;
+	common.breadboardOccupancyMatrixA[pairs[0].code[2]][pairs[0].code[1]] = 1;
 }
 
 if(pairs[0].code[3] == 70){
-	breadboardOccupancyMatrixF[pairs[0].code[5]][pairs[0].code[4]] = 1;
+	common.breadboardOccupancyMatrixF[pairs[0].code[5]][pairs[0].code[4]] = 1;
 }
 else if(pairs[0].code[3] == 65){
-	breadboardOccupancyMatrixA[pairs[0].code[5]][pairs[0].code[4]] = 1;
+	common.breadboardOccupancyMatrixA[pairs[0].code[5]][pairs[0].code[4]] = 1;
 }
 
 //UPDATE ELEMENT TABLE
-std::memcpy(elementTable[elementIndex].code, pairs[0].code, sizeof(pairs[0].code)); //!!!
+std::memcpy(common.elementTable[elementTableIndex].code, pairs[0].code, sizeof(pairs[0].code)); //!!!
 
+}
+#endif
