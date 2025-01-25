@@ -29,6 +29,13 @@ struct Context{
 	unsigned int lVBO;
 	unsigned int oVAO;
 	unsigned int oVBO;
+
+	Shader textureShader;
+	Shader colorShader;
+	Texture elementTexture;
+	Texturef breadboardTexture;
+	Camera camera;	
+
 };
 
 extern Context context;
