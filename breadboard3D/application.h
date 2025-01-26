@@ -27,21 +27,22 @@ public:
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 		context.window = glfwCreateWindow(context.windowWidth, context.windowHeight, context.windowName.c_str(), nullptr, nullptr);
 		if(context.window == nullptr){
-			std:cerr << "Window could not be created. " << std::endl;
+			std::cout << "Window could not be created. " << std::endl;
 			return -1;
 		}
-		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		glfwMakeContextCurrent(context.window);
+		glfwSetInputMode(context.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
-        		std::cerr << "Failed to initialize GLAD. " << std::endl;
+        		std::cout << "Failed to initialize GLAD. " << std::endl;
         		return -1;
     		}
 		
 		glEnable(GL_DEPTH_TEST);
 
 		//Set shaders, textures, camera
-		context.textureShader = Shader("./mesh/shaders/tVertex.vs", "./mesh/shaders/tFragment.fs", true);
-		context.colorShader = Shader("./mesh/shaders/lVertex.vs", "./mesh/shaders/lFragment.fs", true);
-		context.elementTexture = Texture(" ");
+		context.textureShader = Shader("./breadboard3D/mesh/shaders/tVertex.vs", "./breadboard3D/mesh/shaders/tFragment.fs", true);
+		context.colorShader = Shader("./breadboard3D/mesh/shaders/lVertex.vs", "./breadboard3D/mesh/shaders/lFragment.fs", true);
+		context.elementTexture = Texture("resistor.png");
 		generateBreadboardTexture(context, common);
 		context.camera = Camera(context.window);
 		context.camera.cameraSpeed = 20.f;
@@ -61,7 +62,7 @@ private:
 
 void Application::run(Context& context, Common& common){
 
-readFile(common, "netlistExample.txt");
+readFile(common, "netlistTest.txt");
 mapNetlist(common);
 icPlace(common);
 

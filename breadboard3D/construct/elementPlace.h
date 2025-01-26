@@ -20,7 +20,7 @@ for(int x = 0; x < 59; x++){ //node 1 , also should rename x and y to row/col
 		}
 		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
-			p = { {70, y, x} };
+			p = { {65, y, x} };
 			v1.push_back(p);
 		}
 	}
@@ -33,14 +33,14 @@ for(int x = 0; x < 59; x++){ //node 1 , also should rename x and y to row/col
 		}
 		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
-			p = { {70, y, x} };
+			p = { {65, y, x} };
 			v1.push_back(p);
 		}
 	}
 	for(int y = 2; y < 7; y++){
 		bool c1 = common.breadboardOccupancyMatrixF[x][y];
 		bool c2 = common.breadboardRailFullArrayF[x];
-		bool c3 = (common.breadboardRailDescriptorArrayF[x] == node1); //!!!!
+		bool c3 = (common.breadboardRailDescriptorArrayF[x] == node1);
 		if(!c1 && !c2 && c3){
 			p = { {70, y, x} };
 			v1.push_back(p);
@@ -55,6 +55,27 @@ for(int x = 0; x < 59; x++){ //node 1 , also should rename x and y to row/col
 	}
 }
 
+//Allocate if v1 is empty. 
+if(v1.empty()){	
+	for(int x = 0; x < 59; x++){
+		if(common.breadboardRailDescriptorArrayF[x] == -1){
+			common.breadboardRailDescriptorArrayF[x] = node1;
+			common.breadboardOccupancyMatrixF[x][2] = 1;
+			point p;
+			p = { {70, 2, x} };
+			v1.push_back(p);
+			break;
+		} else if(common.breadboardRailDescriptorArrayA[x] == -1){
+			common.breadboardRailDescriptorArrayA[x] = node1;
+			common.breadboardOccupancyMatrixA[x][2] = 1;
+			point p;
+			p = { {65, 2, x} };
+			v1.push_back(p);
+			break;
+		}
+	}	
+}
+
 for(int x = 0; x < 59; x++){ //node 2
 	point p;
 	for(int y = 0; y < 1; y++){ //VCC
@@ -62,12 +83,12 @@ for(int x = 0; x < 59; x++){ //node 2
 		bool c2 = (node2 == common.vccNode);
 		if(!c1 && c2){
 			p = { {70, y, x} };
-			v1.push_back(p);
+			v2.push_back(p);
 		}
 		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
-			p = { {70, y, x} };
-			v1.push_back(p);
+			p = { {65, y, x} };
+			v2.push_back(p);
 		}
 	}
 	for(int y = 1; y < 2; y++){ //GND
@@ -75,12 +96,12 @@ for(int x = 0; x < 59; x++){ //node 2
 		bool c2 = (node2 == common.groundNode);
 		if(!c1 && c2){
 			p = { {70, y, x} };
-			v1.push_back(p);
+			v2.push_back(p);
 		}
 		c1 = common.breadboardOccupancyMatrixA[x][y];
 		if(!c1 && c2){
-			p = { {70, y, x} };
-			v1.push_back(p);
+			p = { {65, y, x} };
+			v2.push_back(p);
 		}
 	}
 	for(int y = 2; y < 7; y++){		
@@ -99,6 +120,27 @@ for(int x = 0; x < 59; x++){ //node 2
 			v2.push_back(p);
 		}
 	}
+}
+
+//Allocate if v2 is empty. 
+if(v2.empty()){	
+	for(int x = 0; x < 59; x++){
+		if(common.breadboardRailDescriptorArrayF[x] == -1){
+			common.breadboardRailDescriptorArrayF[x] = node2;
+			common.breadboardOccupancyMatrixF[x][2] = 1;
+			point p;
+			p = { {70, 2, x} };
+			v2.push_back(p);
+			break;
+		} else if(common.breadboardRailDescriptorArrayA[x] == -1){
+			common.breadboardRailDescriptorArrayA[x] = node2;
+			common.breadboardOccupancyMatrixA[x][2] = 1;
+			point p;
+			p = { {65, 2, x} };
+			v2.push_back(p);
+			break;
+		}
+	}	
 }
 
 //Pair Creation

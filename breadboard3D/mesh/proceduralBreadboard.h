@@ -27,7 +27,7 @@ int regularRows[] = {0, 2, 4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 22, 24, 26, 28, 30
 
 //Fill breadboard texture colors
 for(int i = 0; i < 41; i++){
-	for(int j = 0; j < 119){
+	for(int j = 0; j < 119; j++){
 		int index = (i * 119 + j) * 4;
 		context.breadboardTexture.data[index] = lightBeige.x;
 		context.breadboardTexture.data[index + 1] = lightBeige.y;

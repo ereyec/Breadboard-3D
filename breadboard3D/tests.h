@@ -8,6 +8,8 @@
 #include "./construct/icPlace.h"
 #include "./construct/elementPlace.h"
 #include "./construct/bookkeeping.h"
+#include "./mesh/meshBreadboard.h"
+#include "./mesh/proceduralBreadboard.h"
 
 void readContext(Context& context){
 	std::cout << "Context window width: " << context.windowWidth << std::endl;
@@ -236,14 +238,67 @@ void icPlaceTest(Common& common){
 void elementPlaceTest(Common& common){
 	readFile(common, "netlistTest.txt");
 	mapNetlist(common);
-	icPlace(common);
+	icPlace(common);	
+
+	//placeElement(common, 3, 5, 0); //passed	
+	//placeElement(common, 4, 0, 1);	//passed - copy-pasting mistake was the cause of failure!
+	//placeElement(common, 5, 1, 2); //passed
+	//placeElement(common, 2, 6, 3); //passed :: failed on 01/25 - need to allocate node if v1 or v2 is empty. 
+	//placeElement(common, 6, 0, 4); //passed
+	//placeElement(common, 1, 0, 5); //passsed
+	//printBreadboard(common);	
 
 	for(int i = 0; i < common.elementTable.size(); i++){
 		placeElement(common, common.elementTable[i].nodes[0], common.elementTable[i].nodes[1], i);
-		breadboardCheck(common);
-		printBreadboard(common);			
+		breadboardCheck(common);				
 	}
+	printBreadboard(common);		
+}
 
+void appInitTest(Context& context){
+	glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+		context.window = glfwCreateWindow(context.windowWidth, context.windowHeight, context.windowName.c_str(), nullptr, nullptr);
+		if(context.window == nullptr){
+			std::cout << "Window could not be created. " << std::endl;
+			return;
+		}
+		glfwSetInputMode(context.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
+        		std::cout << "Failed to initialize GLAD. " << std::endl;
+        		return;
+    		}
+		
+		glEnable(GL_DEPTH_TEST);
+
+		//Set shaders, textures, camera
+		context.textureShader = Shader("./mesh/shaders/tVertex.vs", "./mesh/shaders/tFragment.fs", true);
+		context.colorShader = Shader("./mesh/shaders/lVertex.vs", "./mesh/shaders/lFragment.fs", true);
+		context.elementTexture = Texture(" ");
+		generateBreadboardTexture(context, common);
+		context.camera = Camera(context.window);
+		context.camera.cameraSpeed = 20.f;
+}
+
+void meshBreadboardTest(Common& common, Context& context){
+	appInitTest(context);
+
+	readFile(common, "netlistTest.txt");
+	mapNetlist(common);
+	icPlace(common);	
+
+	for(int i = 0; i < common.elementTable.size(); i++){
+		placeElement(common, common.elementTable[i].nodes[0], common.elementTable[i].nodes[1], i);
+		breadboardCheck(common);				
+	}
+	
+	meshBreadboard(common, context);
+
+	
+	
 }
 
 #endif

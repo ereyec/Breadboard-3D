@@ -16,7 +16,9 @@ int main(){
 	//readFileTest(common, "netlistTest.txt");
 	//mapNetlistTest(common);
 	//icPlaceTest(common);
-	elementPlaceTest(common);
+	//elementPlaceTest(common);
+	//appInitTest(context);
+	//meshBreadboardTest(common, context);
 
 	return 0;
 }

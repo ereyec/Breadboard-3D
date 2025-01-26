@@ -8,7 +8,7 @@
 int main(int argc, char* argv[]){
 
 	if(argc > 2){
-		std::cout << "Usage: type \"help\" for more info " std::endl;
+		std::cout << "Usage: type \"help\" for more info " << std::endl;
 	} else if(argc == 2){
 		if(std::strcmp(argv[1], "help") == 0){
 			std::cout << "For more info please visit: https://github.com/ereyec/Breadboard-3D/tree/master" << std::endl;

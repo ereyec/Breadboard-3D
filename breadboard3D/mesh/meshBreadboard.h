@@ -21,7 +21,7 @@ for(int i = 0; i < common.elementTable.size(); i++){
 	
 	glm::vec2 lead1Pos2D = getPosition(h1, x1, y1);
 	glm::vec2 lead2Pos2D = getPosition(h2, x2, y2);
-	glm::vec2 elementPos2D = getMidpoint2D(lead1Pos.x, lead1Pos.y, lead2Pos.x, lead2Pos.y);
+	glm::vec2 elementPos2D = getMidpoint2D(lead1Pos2D.x, lead1Pos2D.y, lead2Pos2D.x, lead2Pos2D.y);
 	glm::vec3 elementPos3D = glm::vec3(elementPos2D.x, 5.f, elementPos2D.y);
 	
 	float xzAngle = getAngleFromPoints(lead1Pos2D.x, lead1Pos2D.y, lead2Pos2D.x, lead2Pos2D.y);
