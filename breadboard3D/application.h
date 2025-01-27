@@ -38,6 +38,7 @@ public:
     		}
 		
 		glEnable(GL_DEPTH_TEST);
+		glLineWidth(5.f);
 
 		//Set shaders, textures, camera
 		context.textureShader = Shader("./breadboard3D/mesh/shaders/tVertex.vs", "./breadboard3D/mesh/shaders/tFragment.fs", true);

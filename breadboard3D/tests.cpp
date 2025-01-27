@@ -18,7 +18,7 @@ int main(){
 	//icPlaceTest(common);
 	//elementPlaceTest(common);
 	//appInitTest(context);
-	//meshBreadboardTest(common, context);
+	meshBreadboardTest(common, context);
 
 	return 0;
 }

@@ -13,16 +13,16 @@ for(int i = 0; i < common.elementTable.size(); i++){
 	//Element Vertices (Textured)
 	//Retrieve the code:
 	int h1 = common.elementTable[i].code[0];
-	int x1 = common.elementTable[i].code[2];
-	int y1 = common.elementTable[i].code[1];
+	int x1 = common.elementTable[i].code[1];
+	int y1 = common.elementTable[i].code[2];
 	int h2 = common.elementTable[i].code[3];
-	int x2 = common.elementTable[i].code[5];
-	int y2 = common.elementTable[i].code[4];
+	int x2 = common.elementTable[i].code[4];
+	int y2 = common.elementTable[i].code[5];
 	
 	glm::vec2 lead1Pos2D = getPosition(h1, x1, y1);
 	glm::vec2 lead2Pos2D = getPosition(h2, x2, y2);
 	glm::vec2 elementPos2D = getMidpoint2D(lead1Pos2D.x, lead1Pos2D.y, lead2Pos2D.x, lead2Pos2D.y);
-	glm::vec3 elementPos3D = glm::vec3(elementPos2D.x, 5.f, elementPos2D.y);
+	glm::vec3 elementPos3D = glm::vec3(elementPos2D.x, 2.f, elementPos2D.y);
 	
 	float xzAngle = getAngleFromPoints(lead1Pos2D.x, lead1Pos2D.y, lead2Pos2D.x, lead2Pos2D.y);
 
@@ -66,12 +66,12 @@ for(int i = 0; i < common.elementTable.size(); i++){
 	glm::vec3 v3 = breadboardVertices::v3;
 	glm::vec3 v4 = breadboardVertices::v4;
 	
-	pushV3T2(context.oVertexData, v1, breadboardVertices::t1);
-	pushV3T2(context.oVertexData, v2, breadboardVertices::t2);
-	pushV3T2(context.oVertexData, v3, breadboardVertices::t3);
-	pushV3T2(context.oVertexData, v2, breadboardVertices::t2);
-	pushV3T2(context.oVertexData, v3, breadboardVertices::t3);
-	pushV3T2(context.oVertexData, v4, breadboardVertices::t4);
+	pushV3T2(context.oVertexData, v1, breadboardVertices::t3);
+	pushV3T2(context.oVertexData, v2, breadboardVertices::t1);
+	pushV3T2(context.oVertexData, v3, breadboardVertices::t4);
+	pushV3T2(context.oVertexData, v2, breadboardVertices::t1);
+	pushV3T2(context.oVertexData, v3, breadboardVertices::t4);
+	pushV3T2(context.oVertexData, v4, breadboardVertices::t2);
 
 	//Todo: Place IC vertices (if applicable here)
 }

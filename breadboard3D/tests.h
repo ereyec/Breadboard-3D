@@ -1,6 +1,10 @@
 #ifndef TESTS_H
 #define TESTS_H
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "context.h"
 #include "common.h"
 #include "./netlist/readFile.h"
@@ -266,6 +270,7 @@ void appInitTest(Context& context){
 			std::cout << "Window could not be created. " << std::endl;
 			return;
 		}
+		glfwMakeContextCurrent(context.window);
 		glfwSetInputMode(context.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         		std::cout << "Failed to initialize GLAD. " << std::endl;
@@ -275,8 +280,8 @@ void appInitTest(Context& context){
 		glEnable(GL_DEPTH_TEST);
 
 		//Set shaders, textures, camera
-		context.textureShader = Shader("./mesh/shaders/tVertex.vs", "./mesh/shaders/tFragment.fs", true);
-		context.colorShader = Shader("./mesh/shaders/lVertex.vs", "./mesh/shaders/lFragment.fs", true);
+		context.textureShader = Shader("./breadboard3D/mesh/shaders/tVertex.vs", "./breadboard3D/mesh/shaders/tFragment.fs", true);
+		context.colorShader = Shader("./breadboard3D/mesh/shaders/lVertex.vs", "./breadboard3D/mesh/shaders/lFragment.fs", true);
 		context.elementTexture = Texture(" ");
 		generateBreadboardTexture(context, common);
 		context.camera = Camera(context.window);
@@ -294,11 +299,42 @@ void meshBreadboardTest(Common& common, Context& context){
 		placeElement(common, common.elementTable[i].nodes[0], common.elementTable[i].nodes[1], i);
 		breadboardCheck(common);				
 	}
+	printBreadboard(common);		
+	
+	//Print the element code. 	
+	std::cout << std::endl;
+	for(int i = 0; i < common.elementTable.size(); i++){
+		std::cout << "Element [" << i << "] code: ";
+		for(int j = 0; j < 6; j++){
+			std::cout << common.elementTable[i].code[j] << " ";
+		}
+		std::cout << std::endl;	
+	}
 	
 	meshBreadboard(common, context);
+	
+	std::cout << "textured vertex data size: " << context.tVertexData.size() << std::endl;
+	for(int i = 0; i < 6; i++){
+		std::cout << context.tVertexData[i*5 + 0] << " ";
+		std::cout << context.tVertexData[i*5 + 1] << " ";
+		std::cout << context.tVertexData[i*5 + 2] << " ";
+		std::cout << context.tVertexData[i*5 + 3] << " ";
+		std::cout << context.tVertexData[i*5 + 4] << " ";
+		std::cout << std::endl;
+	}
 
-	
-	
+	std::cout << "inline static element vertices v1: " << std::endl;
+	std::cout << elementVertices::v1.x << " " << elementVertices::v1.y << " " << elementVertices::v1.z << std::endl;
+
+	std::cout << "calculated vertices: " << std::endl;
+	glm::vec2 lead1Pos2D = getPosition(65, 5, 1);
+	glm::vec2 lead2Pos2D = getPosition(65, 5, 2);
+	glm::vec2 elementPos2D = getMidpoint2D(lead1Pos2D.x, lead1Pos2D.y, lead2Pos2D.x, lead2Pos2D.y);
+	glm::vec3 elementPos3D = glm::vec3(elementPos2D.x, 5.f, elementPos2D.y);
+	float xzAngle = getAngleFromPoints(lead1Pos2D.x, lead1Pos2D.y, lead2Pos2D.x, lead2Pos2D.y);
+	glm::mat3 rotationMatrix = getRotationMatrix(xzAngle);
+	glm::vec3 v1 = (rotationMatrix * elementVertices::v1) + elementPos3D;
+
 }
 
 #endif
