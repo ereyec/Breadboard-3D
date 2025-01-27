@@ -21,23 +21,34 @@ struct Context{
 
 	unsigned int windowWidth = 1200;
 	unsigned int windowHeight = 900;
-	std::string windowName = "Breadboard 3D";	
+	std::string windowName = "Breadboard 3D";
 
-	std::vector<float> tVertexData;
-	std::vector<float> lVertexData;
-	std::vector<float> oVertexData;
+	std::vector<float> tVertexData; //use: textured triangles only, reserved for circuit elements
+	std::vector<float> lVertexData; //use: line segments only
+	std::vector<float> oVertexData; //use: textured triangles only, reserved for breadboard, ICs
+	std::vector<float> cVertexData; //use: colored triangles only
 
 	unsigned int tVAO;
 	unsigned int tVBO;
+
 	unsigned int lVAO;
 	unsigned int lVBO;
+
 	unsigned int oVAO;
 	unsigned int oVBO;
 
+	unsigned int cVAO;
+	unsigned int cVBO;	
+
 	Shader textureShader;
+	Shader lineShader;
 	Shader colorShader;
+	
+
 	Texture elementTexture;
 	Texturef breadboardTexture;
+	Texture icTexture;
+
 	Camera camera;	
 
 };

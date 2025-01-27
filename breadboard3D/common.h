@@ -59,6 +59,8 @@ public:
 	int groundNode;
 	int vccNode;
 
+	int numPins; //1-ic model
+
 	bool breadboardOccupancyMatrixF[59][7]; 
 	bool breadboardOccupancyMatrixA[59][7];
 
@@ -163,6 +165,15 @@ void pushV3(std::vector<float>& vertices, glm::vec3 vec){
 	vertices.push_back(vec.x);
         vertices.push_back(vec.y);
         vertices.push_back(vec.z);
+}
+
+void pushV3C3(std::vector<float>& vertices, glm::vec3 vec, glm::vec3 col){
+	vertices.push_back(vec.x);
+        vertices.push_back(vec.y);
+        vertices.push_back(vec.z);
+	vertices.push_back(col.x);
+        vertices.push_back(col.y);
+        vertices.push_back(col.z);
 }
 
 #endif

@@ -42,9 +42,13 @@ public:
 
 		//Set shaders, textures, camera
 		context.textureShader = Shader("./breadboard3D/mesh/shaders/tVertex.vs", "./breadboard3D/mesh/shaders/tFragment.fs", true);
-		context.colorShader = Shader("./breadboard3D/mesh/shaders/lVertex.vs", "./breadboard3D/mesh/shaders/lFragment.fs", true);
+		context.lineShader = Shader("./breadboard3D/mesh/shaders/lVertex.vs", "./breadboard3D/mesh/shaders/lFragment.fs", true);
+		context.colorShader = Shader("./breadboard3D/mesh/shaders/cVertex.vs", "./breadboard3D/mesh/shaders/cFragment.fs", true);
+
 		context.elementTexture = Texture("resistor.png");
+		context.icTexture = Texture("icTexture.png");
 		generateBreadboardTexture(context, common);
+
 		context.camera = Camera(context.window);
 		context.camera.cameraSpeed = 20.f;
 
@@ -94,18 +98,27 @@ while (!glfwWindowShouldClose(context.window)){
 
 	glBindTexture(GL_TEXTURE_2D, context.breadboardTexture.ID);
 	glBindVertexArray(context.oVAO);
-	glDrawArrays(GL_TRIANGLES, 0, context.oVertexData.size() / 5);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glBindTexture(GL_TEXTURE_2D, context.icTexture.ID);
+	glDrawArrays(GL_TRIANGLES, 6, 12);
 
 	glBindTexture(GL_TEXTURE_2D, context.elementTexture.ID);
 	glBindVertexArray(context.tVAO);
 	glDrawArrays(GL_TRIANGLES, 0, context.tVertexData.size() / 5);
 
+	glUseProgram(context.lineShader.ID);
+	glUniformMatrix4fv(glGetUniformLocation(context.lineShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(glGetUniformLocation(context.lineShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+	glBindVertexArray(context.lVAO);
+	glDrawArrays(GL_LINES, 0, context.lVertexData.size() / 3);
+
 	glUseProgram(context.colorShader.ID);
 	glUniformMatrix4fv(glGetUniformLocation(context.colorShader.ID, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
         glUniformMatrix4fv(glGetUniformLocation(context.colorShader.ID, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
-	glBindVertexArray(context.lVAO);
-	glDrawArrays(GL_LINES, 0, context.lVertexData.size() / 3);
+	glBindVertexArray(context.cVAO);
+	glDrawArrays(GL_TRIANGLES, 0, context.cVertexData.size() / 6);
 	
 	glfwSwapBuffers(context.window);
         glfwPollEvents();

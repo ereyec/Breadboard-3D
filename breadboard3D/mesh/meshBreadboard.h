@@ -73,7 +73,77 @@ for(int i = 0; i < common.elementTable.size(); i++){
 	pushV3T2(context.oVertexData, v3, breadboardVertices::t4);
 	pushV3T2(context.oVertexData, v4, breadboardVertices::t2);
 
+	glm::vec3 color = glm::vec3(0.82f, 0.8f, 0.741f);
+	pushV3C3(context.cVertexData, breadboardVertices::v1, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v3, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v5, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v3, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v5, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v7, color);
+
+	color = glm::vec3(0.87f, 0.86f, 0.82f);
+	pushV3C3(context.cVertexData, breadboardVertices::v1, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v2, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v5, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v2, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v5, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v6, color);
+
+	color = glm::vec3(0.82f, 0.8f, 0.741f);
+	pushV3C3(context.cVertexData, breadboardVertices::v4, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v2, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v8, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v2, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v8, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v6, color);
+
+	color = glm::vec3(0.87f, 0.86f, 0.82f);
+	pushV3C3(context.cVertexData, breadboardVertices::v3, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v4, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v7, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v4, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v7, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v8, color);
+
+	color = glm::vec3(0.925f, 0.929f, 0.906f);
+	pushV3C3(context.cVertexData, breadboardVertices::v5, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v6, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v7, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v6, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v7, color);
+	pushV3C3(context.cVertexData, breadboardVertices::v8, color);
+	
+
 	//Todo: Place IC vertices (if applicable here)
+	if(common.numPins != -1){
+		v1 = integratedCircuitVertices::v1;
+		v2 = integratedCircuitVertices::v2;
+		v3 = integratedCircuitVertices::v3;
+		v4 = integratedCircuitVertices::v4;
+
+		float scale = (common.numPins / 2.f) - 1.f;
+		v1.z = v1.z * scale;
+		v2.z = v2.z * scale;
+		v3.z = v3.z * scale + 0.25f;
+		v4.z = v4.z * scale + 0.25f;
+
+		glm::vec2 position2D = getPosition(70, 6, 1);
+		glm::vec3 position3D = glm::vec3(position2D.x, 0.0f, position2D.y);
+		
+		v1 += position3D;
+		v2 += position3D;
+		v3 += position3D;
+		v4 += position3D;
+
+
+		pushV3T2(context.oVertexData, v1, integratedCircuitVertices::t1);
+		pushV3T2(context.oVertexData, v2, integratedCircuitVertices::t2);
+		pushV3T2(context.oVertexData, v3, integratedCircuitVertices::t3);
+		pushV3T2(context.oVertexData, v2, integratedCircuitVertices::t2);
+		pushV3T2(context.oVertexData, v3, integratedCircuitVertices::t3);
+		pushV3T2(context.oVertexData, v4, integratedCircuitVertices::t4);
+
+	}
 }
 
 //Jumper wires (todo)
@@ -108,6 +178,18 @@ glBufferData(GL_ARRAY_BUFFER, context.oVertexData.size() * sizeof(float), contex
 glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 glEnableVertexAttribArray(0);
 glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+glEnableVertexAttribArray(1);
+glBindBuffer(GL_ARRAY_BUFFER, 0);
+glBindVertexArray(0);
+
+glGenVertexArrays(1, &context.cVAO);
+glGenBuffers(1, &context.cVBO);
+glBindVertexArray(context.cVAO);
+glBindBuffer(GL_ARRAY_BUFFER, context.cVBO);
+glBufferData(GL_ARRAY_BUFFER, context.cVertexData.size() * sizeof(float), context.cVertexData.data(), GL_STATIC_DRAW);
+glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+glEnableVertexAttribArray(0);
+glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 glEnableVertexAttribArray(1);
 glBindBuffer(GL_ARRAY_BUFFER, 0);
 glBindVertexArray(0);
