@@ -7,10 +7,16 @@ struct elementVertices{
 	inline static glm::vec3 v2 = glm::vec3(0.5f, 0.1f, 0.f);
 	inline static glm::vec3 v3 = glm::vec3(-0.5f, -0.1f, 0.f);
 	inline static glm::vec3 v4 = glm::vec3(0.5f, -0.1f, 0.f);
+
 	inline static glm::vec2 t1 = glm::vec2(0, 1);
-	inline static glm::vec2 t2 = glm::vec2(1, 1);
-	inline static glm::vec2 t3 = glm::vec2(0, 0);
-	inline static glm::vec2 t4 = glm::vec2(1, 0);
+	inline static glm::vec2 t2 = glm::vec2(0.333, 1);
+	inline static glm::vec2 t3 = glm::vec2(0.666, 1);
+	inline static glm::vec2 t4 = glm::vec2(1, 1);
+	inline static glm::vec2 t5 = glm::vec2(0, 0);
+	inline static glm::vec2 t6 = glm::vec2(0.333, 0);
+	inline static glm::vec2 t7 = glm::vec2(0.666, 0);
+	inline static glm::vec2 t8 = glm::vec2(1, 0);
+	
 };
 
 struct leadBaseVertices{
@@ -28,12 +34,13 @@ struct breadboardVertices{
 	inline static glm::vec3 v5 = glm::vec3(0.0f, -1.5f, 0.0f);
 	inline static glm::vec3 v6 = glm::vec3(10.25f, -1.5f, 0.0f);
 	inline static glm::vec3 v7 = glm::vec3(0.0f, -1.5f, 29.75f);
-	inline static glm::vec3 v8 = glm::vec3(10.25f, -1.5f, 29.75f);
-	
+	inline static glm::vec3 v8 = glm::vec3(10.25f, -1.5f, 29.75f);	
+
 	inline static glm::vec2 t1 = glm::vec2(0, 1);
 	inline static glm::vec2 t2 = glm::vec2(1, 1);
 	inline static glm::vec2 t3 = glm::vec2(0, 0);
 	inline static glm::vec2 t4 = glm::vec2(1, 0);
+
 };
 
 struct integratedCircuitVertices{
@@ -45,4 +52,11 @@ struct integratedCircuitVertices{
 	inline static glm::vec2 t2 = glm::vec2(1, 1);
 	inline static glm::vec2 t3 = glm::vec2(0, 0);
 	inline static glm::vec2 t4 = glm::vec2(1, 0);
+};
+
+struct icPinVertices{
+	inline static glm::vec3 v1 = glm::vec3(0, 0.25f, 0);
+	inline static glm::vec3 v2 = glm::vec3(0, 0.25f, 0.25f);
+	inline static glm::vec3 v3 = glm::vec3(0, 0, 0);
+	inline static glm::vec3 v4 = glm::vec3(0, 0, 0.25f);
 };

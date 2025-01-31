@@ -45,7 +45,7 @@ public:
 		context.lineShader = Shader("./breadboard3D/mesh/shaders/lVertex.vs", "./breadboard3D/mesh/shaders/lFragment.fs", true);
 		context.colorShader = Shader("./breadboard3D/mesh/shaders/cVertex.vs", "./breadboard3D/mesh/shaders/cFragment.fs", true);
 
-		context.elementTexture = Texture("resistor.png");
+		context.elementTexture = Texture("elementAtlas.png");
 		context.icTexture = Texture("icTexture.png");
 		generateBreadboardTexture(context, common);
 

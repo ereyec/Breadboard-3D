@@ -33,10 +33,31 @@ for(int i = 0; i < common.elementTable.size(); i++){
 	glm::vec3 v3 = (rotationMatrix * elementVertices::v3) + elementPos3D;
 	glm::vec3 v4 = (rotationMatrix * elementVertices::v4) + elementPos3D;
 
-	glm::vec2 t1 = elementVertices::t1;
-	glm::vec2 t2 = elementVertices::t2;
-	glm::vec2 t3 = elementVertices::t3;
-	glm::vec2 t4 = elementVertices::t4;
+	glm::vec2 t1;
+	glm::vec2 t2;
+	glm::vec2 t3;
+	glm::vec2 t4;
+
+	if(common.elementTable[i].type == R){
+		t1 = elementVertices::t1;
+		t2 = elementVertices::t2;
+		t3 = elementVertices::t5;
+		t4 = elementVertices::t6;
+	}
+	else if(common.elementTable[i].type == C){
+		t1 = elementVertices::t2;
+		t2 = elementVertices::t3;
+		t3 = elementVertices::t6;
+		t4 = elementVertices::t7;
+	}
+	else if(common.elementTable[i].type == D){
+		t1 = elementVertices::t3;
+		t2 = elementVertices::t4;
+		t3 = elementVertices::t7;
+		t4 = elementVertices::t8;
+	}
+
+	
 
 	pushV3T2(context.tVertexData,v1, t1);
 	pushV3T2(context.tVertexData,v2, t2);
@@ -127,7 +148,7 @@ for(int i = 0; i < common.elementTable.size(); i++){
 		v3.z = v3.z * scale + 0.25f;
 		v4.z = v4.z * scale + 0.25f;
 
-		glm::vec2 position2D = getPosition(70, 6, 1);
+		glm::vec2 position2D = getPosition(70, 6, 1); //change!!
 		glm::vec3 position3D = glm::vec3(position2D.x, 0.0f, position2D.y);
 		
 		v1 += position3D;
@@ -142,6 +163,28 @@ for(int i = 0; i < common.elementTable.size(); i++){
 		pushV3T2(context.oVertexData, v2, integratedCircuitVertices::t2);
 		pushV3T2(context.oVertexData, v3, integratedCircuitVertices::t3);
 		pushV3T2(context.oVertexData, v4, integratedCircuitVertices::t4);
+
+		//first pin
+		glm::vec3 gray = glm::vec3(0.5f, 0.5f, 0.5f);
+		for(int i = 0; i < common.numPins / 2; i++){			
+			pushV3C3(context.cVertexData, icPinVertices::v1 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v2 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v3 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v2 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v3 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v4 + position3D, gray);
+			position3D += glm::vec3(0.0f, 0.0f, 0.5f);
+		}
+		position3D = glm::vec3(position2D.x + 7.f/4.f, 0.0f, position2D.y);
+		for(int i = 0; i < common.numPins / 2; i++){			
+			pushV3C3(context.cVertexData, icPinVertices::v1 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v2 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v3 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v2 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v3 + position3D, gray);
+			pushV3C3(context.cVertexData, icPinVertices::v4 + position3D, gray);
+			position3D += glm::vec3(0.0f, 0.0f, 0.5f);
+		}
 
 	}
 }
