@@ -13,7 +13,7 @@ Enter ````g++ -I./include -L./lib ./include/glad.c ./breadboard3D/main.cpp -l:li
 
 Save your SPICE netlist as a text file to the root directory. 
 
-When prompted with ````Enter your netlist file name: ```` make sure your netlist is in the same directory as the executable, and simple type in the name of the file. e.g. ````netlistTest.txt```
+When prompted with ````Enter your netlist file name: ```` make sure your netlist is in the same directory as the executable, and simple type in the name of the file. e.g. ````netlistTest.txt````
 
 As of now, only 1 IC is allowed per netlist, however, it should be possible to "fit" multiple ICs by simply adding nodes in the appropriate order in a single line in the netlist. 
 Note that the ICs will appear as one large IC, with no gap in between each.  
