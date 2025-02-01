@@ -45,8 +45,8 @@ public:
 		context.lineShader = Shader("./breadboard3D/mesh/shaders/lVertex.vs", "./breadboard3D/mesh/shaders/lFragment.fs", true);
 		context.colorShader = Shader("./breadboard3D/mesh/shaders/cVertex.vs", "./breadboard3D/mesh/shaders/cFragment.fs", true);
 
-		context.elementTexture = Texture("elementAtlas.png");
-		context.icTexture = Texture("icTexture.png");
+		context.elementTexture = Texture("./textures/elementAtlas.png");
+		context.icTexture = Texture("./textures/icTexture.png");
 		generateBreadboardTexture(context, common);
 
 		context.camera = Camera(context.window);
@@ -67,7 +67,11 @@ private:
 
 void Application::run(Context& context, Common& common){
 
-readFile(common, "netlistTest.txt");
+std::string filename;
+std::cout << "Enter your netlist file name: " << std::endl;
+std::cin >> filename;
+
+readFile(common, filename.c_str());
 mapNetlist(common);
 icPlace(common);
 
