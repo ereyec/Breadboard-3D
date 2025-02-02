@@ -4,26 +4,12 @@
 #include <cmath>
 #include <iostream>
 
+#include "../../common.h"
+#include "jwmStructs.h"
+
 #define WIRE_LENGTH 53.0
-#define MAX_CAT_A 11.35
+#define MAX_CAT_A 5.675
 #define MAX_CAT_DIST 36
-
-struct catenaryParams{
-	float a;
-	float dcOffset;
-};
-
-struct logitParams{
-	float a; //determines the width
-	float b; //determines the 'time' shift offset
-	float dcOffset;
-};
-
-struct fitCurve{
-	glm::vec2 a0;
-	glm::vec2 a1;
-	glm::vec2 a2;
-};
 
 float lerp(float a, float b, float t){
 	return a + (b - a) * t;
@@ -36,7 +22,8 @@ void calculateCatenaryFromDist(catenaryParams& c, float distance){
 
 	if(distance <= MAX_CAT_DIST){
 		c.a = MAX_CAT_A;
-		c.dcOffset = 28.87; //magic number
+		c.dcOffset = 14.435f; //magic number
+		return;
 	}
 
 	//For the largest of distances (~52), check num of iterations
@@ -57,12 +44,12 @@ void calculateCatenaryFromDist(catenaryParams& c, float distance){
 		}
 	}	
 	c.a = guess;	
-	c.dcoffset = -guess * std::cosh((distance / 2) / guess) + guess;
+	c.dcOffset = -guess * std::cosh((distance / 2) / guess) + guess;
 
 }
 
 void calculateLogitFunction(logitParams& lp, float distance){
-	float width = lerp(0.5f, 4, 1 - (0.5f*dist) / 18.f);
+	float width = lerp(0.5f, 4, 1 - (0.5f*distance) / 18.f);
 	lp.a = 1 / width;
 	lp.b = distance / 2.f;
 	
@@ -109,7 +96,8 @@ void calculateFitCurve(fitCurve& fc, catenaryParams& c, logitParams& lp, float d
 
 	//find a point on the catenary halfway from the intersection point to the y axis (on the catenary). 
 	//suggestions: start with distance/4 on the catenary for point a0
-	fc.a0 = -c.a * std::cosh((distance / 4) / c.a) + c.dcOffset;
+	fc.a0.x = distance / 4.f;
+	fc.a0.y = -c.a * std::cosh((distance / 4) / c.a) + c.dcOffset;
 	fc.a2 = glm::vec2(x1, y1);
 
 	//between the two points we've found, calculate the midpoint. 
@@ -119,15 +107,18 @@ void calculateFitCurve(fitCurve& fc, catenaryParams& c, logitParams& lp, float d
 
 	//create a perpendicular line to find the halfway point toward the curve.
 	//suggestions: review algebra, will this be iterative as well?
-	glm::vec2 dxdy = -(a2.x - a0.x)/(a2.y - a0.y); 
+	glm::vec2 dxdy;
+	dxdy.y = -(fc.a2.x - fc.a0.x); //It might be confusing that we have x, but I have it because it is a perpend line.
+	dxdy.x = (fc.a2.y - fc.a0.y);
+
 	g1 = -c.a * std::cosh((md.x) / c.a) + c.dcOffset;
 
 	while(md.y < g1){
-		md.x += 0.01f;
+		md -= dxdy * 0.01f; //!! ??
 		g1 = -c.a * std::cosh((md.x) / c.a) + c.dcOffset;
 	}
 
-	fc.a1 = getMidPoint2D(m0.x, m0.y, md.x, md.y);
+	fc.a1 = getMidpoint2D(m0.x, m0.y, md.x, md.y);
  
 }
 

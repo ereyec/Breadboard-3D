@@ -38,7 +38,7 @@ struct point{
 struct elementTableRow{
 	int type;
 	std::vector<int> nodes;
-	int code[6];
+	int code[6]; //side, row, col, side, row, col
 };
 
 struct nodeTableRow{
@@ -46,6 +46,9 @@ struct nodeTableRow{
 	std::vector<int> elements;
 };
 
+struct jumperWireElement{
+	int code[6];
+};
 
 class Common{ //todo: rename this to breadboard?
 public:
@@ -53,6 +56,7 @@ public:
 
 	std::vector<elementTableRow> elementTable;
 	std::vector<nodeTableRow> nodeTable;
+	std::vector<jumperWireElement> jumperWireTable;
 
 	std::unordered_map<std::string, int> nodeMap;
 	

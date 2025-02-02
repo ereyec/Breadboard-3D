@@ -4,6 +4,7 @@
 #include "../common.h"
 #include "../context.h"
 #include "meshes.h"
+#include "./jumper_wire_model/sampler.h"
 
 /*Creates the vertex data for the breadboard, then buffers it to the GPU*/
 void meshBreadboard(Common& common, Context& context){
@@ -190,6 +191,9 @@ for(int i = 0; i < common.elementTable.size(); i++){
 }
 
 //Jumper wires (todo)
+//Write test input here.
+//common.jumperWireTable.push_back({70, 0, 0, 70, 0, 28});
+sampleAndMeshJumperWires(common, context);
 
 glGenVertexArrays(1, &context.tVAO);
 glGenBuffers(1, &context.tVBO);

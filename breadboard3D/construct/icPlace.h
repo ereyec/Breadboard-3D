@@ -33,5 +33,7 @@ if(icIndex != -1){
 
 }
 
+//Todo: Connect identical ic pin nodes and ic pin vcc and ground with jumper wires. 
+
 }
 #endif

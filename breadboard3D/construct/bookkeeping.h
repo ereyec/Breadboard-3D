@@ -43,7 +43,9 @@ for(int i = 0; i < 59; i++){
 			common.breadboardOccupancyMatrixF[newRailIndex][0] = 1;
 			common.breadboardOccupancyMatrixF[i][setF[0]] = 1; //!!!
 			common.breadboardRailFullArrayF[i] = 1;
-			//TODO: Push jumper wire code here.
+			//TODO: Push jumper wire code here: (untested)
+			jumperWireElement jwe = {{70, 0, newRailIndex, 70, setF[0], i}};
+			common.jumperWireTable.push_back(jwe);
 		}
 	}
 	
@@ -60,9 +62,11 @@ for(int i = 0; i < 59; i++){
 		if(newRailIndex != -1){
 			common.breadboardRailDescriptorArrayA[newRailIndex] = nodeNum;
 			common.breadboardOccupancyMatrixA[newRailIndex][0] = 1;
-			common.breadboardOccupancyMatrixA[i][setF[0]] = 1; //!!!
+			common.breadboardOccupancyMatrixA[i][setA[0]] = 1; //!!!
 			common.breadboardRailFullArrayA[i] = 1;
-			//TODO: Push jumper wire code here.
+			//TODO: Push jumper wire code here. (untested)
+			jumperWireElement jwe = {{65, 0, newRailIndex, 65, setA[0], i}};
+			common.jumperWireTable.push_back(jwe);
 		}
 	}
 }
