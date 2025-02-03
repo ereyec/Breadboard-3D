@@ -7,11 +7,13 @@ This project is a SPICE netlist 3d visualization tool, created with C++ and Open
 # Build Instructions
 (Windows)
 
+Make sure g++ in installed on your machine. 
+
 Enter ````g++ -I./include -L./lib ./include/glad.c ./breadboard3D/main.cpp -l:libglfw3.a -lopengl32 -lgdi32 -luser32 -o program.exe```` in cmd in the root directory.
 
 # User Instructions
 
-Save your SPICE netlist as a text file to the root directory. 
+Save your SPICE netlist as a text file to the root directory. The example uses an LTSpice netlist, if you are using other versions of SPICE, note that there may be some differences in how each version stores its netlist. 
 
 When prompted with ````Enter your netlist file name: ```` make sure your netlist is in the same directory as the executable, and simple type in the name of the file. e.g. ````netlistTest.txt````
 
@@ -24,4 +26,6 @@ Prefix your netlist IC line with ````-i````.
 
 Prefix the voltage source with ````-v````.
 
-Resistors, capacitors, and diodes need no prefix. 3-lead elements and jumper wires are not supported at this time. 
+Only resistors, capacitors, and diodes are supported, 3-lead elements are not supported at this time.
+
+Jumper wire connections are currently in development. As of now, they only connect IC pin nodes to either vcc or ground. Because they haven't been extensively tested, there may be some redundant connections or inaccuracies. Make sure you check the connections are correct before building your breadboard.

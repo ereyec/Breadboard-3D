@@ -1,10 +1,15 @@
 #ifndef BOOKKEEPING_H
 #define BOOKKEEPING_H
 
+#include <random>
 #include "../common.h"
 
 //Done after every element place
 void breadboardCheck(Common& common){
+
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<int> dist(0, 6);
 
 for(int i = 0; i < 59; i++){
 	int countF = 0;
@@ -44,7 +49,7 @@ for(int i = 0; i < 59; i++){
 			common.breadboardOccupancyMatrixF[i][setF[0]] = 1; //!!!
 			common.breadboardRailFullArrayF[i] = 1;
 			//TODO: Push jumper wire code here: (untested)
-			jumperWireElement jwe = {{70, 0, newRailIndex, 70, setF[0], i}};
+			jumperWireElement jwe = {{70, 0, newRailIndex, 70, setF[0], i}, dist(gen)};
 			common.jumperWireTable.push_back(jwe);
 		}
 	}
@@ -65,7 +70,7 @@ for(int i = 0; i < 59; i++){
 			common.breadboardOccupancyMatrixA[i][setA[0]] = 1; //!!!
 			common.breadboardRailFullArrayA[i] = 1;
 			//TODO: Push jumper wire code here. (untested)
-			jumperWireElement jwe = {{65, 0, newRailIndex, 65, setA[0], i}};
+			jumperWireElement jwe = {{65, 0, newRailIndex, 65, setA[0], i}, dist(gen)};
 			common.jumperWireTable.push_back(jwe);
 		}
 	}

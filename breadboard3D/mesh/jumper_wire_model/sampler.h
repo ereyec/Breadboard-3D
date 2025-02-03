@@ -59,7 +59,7 @@ for(int i = 0; i < 4; i++){
 	jwm.flippedLogitSamplePoints[i].x = -jwm.logitSamplePoints[i].x;
 	jwm.flippedLogitSamplePoints[i].y = jwm.logitSamplePoints[i].y;
 }
-transformAndMeshWire(jwm, context);
+transformAndMeshWire(jwm, context, common, i);
 
 }
 

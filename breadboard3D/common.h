@@ -48,6 +48,7 @@ struct nodeTableRow{
 
 struct jumperWireElement{
 	int code[6];
+	int colorIndex;
 };
 
 class Common{ //todo: rename this to breadboard?

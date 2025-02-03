@@ -27,6 +27,7 @@ struct Context{
 	std::vector<float> lVertexData; //use: line segments only
 	std::vector<float> oVertexData; //use: textured triangles only, reserved for breadboard, ICs
 	std::vector<float> cVertexData; //use: colored triangles only
+	std::vector<float> lcVertexData; //use: colored line segments only
 
 	unsigned int tVAO;
 	unsigned int tVBO;
@@ -38,7 +39,10 @@ struct Context{
 	unsigned int oVBO;
 
 	unsigned int cVAO;
-	unsigned int cVBO;	
+	unsigned int cVBO;
+	
+	unsigned int lcVAO;
+	unsigned int lcVBO;
 
 	Shader textureShader;
 	Shader lineShader;

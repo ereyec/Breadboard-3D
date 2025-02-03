@@ -123,6 +123,9 @@ while (!glfwWindowShouldClose(context.window)){
 
 	glBindVertexArray(context.cVAO);
 	glDrawArrays(GL_TRIANGLES, 0, context.cVertexData.size() / 6);
+
+	glBindVertexArray(context.lcVAO);
+	glDrawArrays(GL_LINES, 0, context.lcVertexData.size() / 6);
 	
 	glfwSwapBuffers(context.window);
         glfwPollEvents();
